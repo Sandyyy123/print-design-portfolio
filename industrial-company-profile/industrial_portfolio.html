@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ProServ Industrial — Company Profile</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f0f0f0;
+    color: #1a1a1a;
+    line-height: 1.75;
+    padding: 40px 20px;
+  }
+
+  .container { max-width: 840px; margin: 0 auto; }
+
+  /* Document header */
+  .doc-header {
+    background: linear-gradient(135deg, #0d2137, #1a3a5c);
+    color: white;
+    padding: 36px 40px;
+    border-radius: 12px 12px 0 0;
+    text-align: center;
+  }
+  .doc-header h1 { font-size: 24px; font-weight: 700; margin-bottom: 6px; letter-spacing: 1px; }
+  .doc-header .subtitle { font-size: 13px; opacity: 0.75; }
+  .doc-header .version { font-size: 11px; opacity: 0.5; margin-top: 10px; }
+
+  .meta-bar {
+    background: #dce4ed;
+    padding: 14px 40px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #4a5568;
+    border-bottom: 1px solid #c5d0dc;
+  }
+
+  /* Page wrapper */
+  .page {
+    background: white;
+    padding: 44px 44px 36px;
+    border-bottom: 3px solid #1a3a5c;
+    position: relative;
+  }
+  .page:last-of-type { border-bottom: none; border-radius: 0 0 12px 12px; }
+
+  .page-label {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    background: #1a3a5c;
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* Typography */
+  .page h2 { font-size: 21px; font-weight: 700; color: #0d2137; margin-bottom: 4px; }
+  .page h2 .thin { font-weight: 300; color: #718096; }
+
+  .tagline {
+    font-size: 16px;
+    font-weight: 300;
+    color: #4a5568;
+    font-style: italic;
+    margin-bottom: 22px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .page h3 { font-size: 16px; font-weight: 600; color: #1a3a5c; margin: 26px 0 10px; }
+
+  p { margin-bottom: 13px; font-size: 14.5px; color: #2d3748; }
+
+  ul { margin: 6px 0 14px 20px; }
+  li { font-size: 14px; color: #2d3748; margin-bottom: 5px; }
+
+  /* Hero image placeholder */
+  .hero-placeholder {
+    width: 100%;
+    border-radius: 8px;
+    margin: 18px 0;
+    border: 1px solid #e2e8f0;
+    background: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9a9a9a;
+    font-size: 13px;
+    font-style: italic;
+  }
+  .hero-placeholder.tall { min-height: 280px; }
+  .hero-placeholder.short { min-height: 220px; }
+
+  /* Image caption */
+  .img-caption {
+    font-size: 11px;
+    color: #718096;
+    text-align: center;
+    margin: -12px 0 18px;
+    font-style: italic;
+  }
+
+  /* Photo grid */
+  .photo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 18px 0;
+  }
+  .photo-grid.three-col { grid-template-columns: 1fr 1fr 1fr; }
+  .photo-grid .photo-item {
+    position: relative;
+  }
+  .photo-grid .photo-placeholder {
+    width: 100%;
+    height: 160px;
+    background: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+    color: #9a9a9a;
+    font-size: 11px;
+    font-style: italic;
+  }
+  .photo-grid .photo-label {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    background: rgba(13, 33, 55, 0.85);
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 3px;
+    letter-spacing: 0.3px;
+  }
+
+  /* Stats row */
+  .stats-row { display: flex; gap: 14px; margin: 22px 0; }
+  .stat-box {
+    flex: 1;
+    text-align: center;
+    background: #f7fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 18px 10px;
+  }
+  .stat-box .number { font-size: 26px; font-weight: 700; color: #1a3a5c; display: block; }
+  .stat-box .label { font-size: 11px; color: #718096; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 3px; }
+
+  /* Capability cards */
+  .cap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0; }
+  .cap-card {
+    background: #f7fafc;
+    border-left: 4px solid #1a3a5c;
+    padding: 16px 18px;
+    border-radius: 0 8px 8px 0;
+  }
+  .cap-card.accent { border-left-color: #c6a34e; }
+  .cap-card h5 { font-size: 13px; font-weight: 600; color: #0d2137; margin-bottom: 5px; }
+  .cap-card p { font-size: 12.5px; margin-bottom: 0; color: #4a5568; }
+
+  /* Image + text card placeholder */
+  .img-text-card {
+    display: flex;
+    gap: 18px;
+    background: #f7fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 18px;
+    margin: 14px 0;
+    align-items: center;
+  }
+  .img-text-card .itc-placeholder {
+    width: 200px;
+    height: 130px;
+    background: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    flex-shrink: 0;
+    color: #9a9a9a;
+    font-size: 11px;
+    font-style: italic;
+  }
+  .img-text-card .itc-content { flex: 1; }
+  .img-text-card h5 { font-size: 13px; font-weight: 600; color: #0d2137; margin-bottom: 4px; }
+  .img-text-card p { font-size: 12.5px; margin-bottom: 0; color: #4a5568; }
+
+  /* Partner boxes */
+  .partner-box {
+    background: linear-gradient(135deg, #f7fafc, #edf2f7);
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 14px 0;
+  }
+  .partner-box h4 { font-size: 14px; font-weight: 700; color: #0d2137; margin-bottom: 4px; }
+  .partner-box .origin { font-size: 11px; color: #718096; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+  .partner-box p { font-size: 12.5px; margin-bottom: 6px; color: #4a5568; }
+
+  /* Case study */
+  .case-study {
+    background: #f7fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 16px 0;
+  }
+  .case-study .cs-photo-placeholder {
+    width: 100%;
+    height: 180px;
+    background: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9a9a9a;
+    font-size: 12px;
+    font-style: italic;
+  }
+  .case-study .cs-body { padding: 20px; }
+  .case-study h5 { font-size: 14px; font-weight: 600; color: #0d2137; margin-bottom: 2px; }
+  .case-study .cs-meta { font-size: 12px; color: #718096; margin-bottom: 10px; }
+  .case-study p { font-size: 13px; margin-bottom: 6px; }
+
+  /* Notes */
+  .note {
+    background: #fffbeb;
+    border: 1px solid #f6e05e;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 12.5px;
+    color: #744210;
+  }
+  .note strong { color: #92400e; }
+  .note ul { margin: 6px 0 0 16px; }
+  .note li { font-size: 12px; color: #744210; margin-bottom: 3px; }
+
+  /* Pillar cards */
+  .pillar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0; }
+  .pillar {
+    background: #f7fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 18px;
+  }
+  .pillar h5 { font-size: 13px; font-weight: 600; color: #0d2137; margin-bottom: 6px; }
+  .pillar p { font-size: 12.5px; margin-bottom: 0; color: #4a5568; }
+
+  /* Contact block */
+  .contact-block {
+    background: linear-gradient(135deg, #0d2137, #1a3a5c);
+    color: white;
+    border-radius: 8px;
+    padding: 26px;
+    margin-top: 22px;
+    text-align: center;
+  }
+  .contact-block h3 { color: white; margin: 0 0 10px; font-size: 17px; }
+  .contact-block p { color: rgba(255,255,255,0.85); font-size: 13px; margin-bottom: 5px; }
+
+  /* Logo placeholder in contact block */
+  .logo-placeholder {
+    height: 50px;
+    width: 180px;
+    margin: 0 auto 14px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.6);
+    font-size: 11px;
+    font-style: italic;
+  }
+
+  .doc-footer {
+    text-align: center;
+    padding: 18px;
+    font-size: 11px;
+    color: #a0aec0;
+  }
+
+  .section-sep { border: none; border-top: 1px solid #e2e8f0; margin: 24px 0; }
+
+  /* Boplan client logo row placeholder */
+  .client-logo-row {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 0 0 18px;
+    padding: 14px 0;
+    background: #f7fafc;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+  }
+  .client-logo-box {
+    height: 28px;
+    width: 60px;
+    background: #e0e0e0;
+    border-radius: 3px;
+    opacity: 0.7;
+  }
+
+  /* Certification badge row placeholder */
+  .cert-badge-placeholder {
+    height: 60px;
+    width: 60px;
+    background: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    color: #9a9a9a;
+    font-size: 9px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  @media print {
+    body { padding: 0; background: white; }
+    .page { page-break-after: always; border-bottom: none; }
+    .page:last-of-type { page-break-after: avoid; }
+    .doc-header, .contact-block, .page-label { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .note { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="doc-header">
+  <h1>PROSERV INDUSTRIAL LTD</h1>
+  <div class="subtitle">Company Profile — Brochure Copy</div>
+  <div class="version">Portfolio sample — identifying details anonymised</div>
+</div>
+
+<div class="meta-bar">
+  <span><strong>Client:</strong> [Portfolio Sample]</span>
+  <span><strong>Deliverable:</strong> Text + photo layout for 4-page company profile</span>
+  <span><strong>Status:</strong> Portfolio sample</span>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 1: WHO WE ARE -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-label">Page 1 — Who We Are</div>
+
+  <!-- HERO placeholder -->
+  <div class="hero-placeholder tall">[ Hero image: multi-bay loading dock installation with service van on-site ]</div>
+  <div class="img-caption">ProServ Industrial multi-bay loading dock installation — dock shelters, levellers, and vehicle restraints commissioned on a new distribution centre</div>
+
+  <h2>ProServ Industrial Ltd</h2>
+  <div class="tagline">Your single engineering partner for industrial doors, loading dock systems, and facility safety across Ireland and Europe.</div>
+
+  <p>When a building goes up, every opening in it matters. The loading docks where goods arrive. The doors that separate clean rooms from production floors. The barriers that protect people from moving vehicles. Each one has to work reliably, meet regulations, and last for decades.</p>
+
+  <p>That is what ProServ Industrial does. Since 2001, we have designed, supplied, installed, and maintained the access and safety systems that keep commercial and industrial buildings operational. From a single roller shutter replacement to a multi-bay loading dock fit-out on a new distribution centre, we deliver end-to-end engineering solutions — and we stay to maintain them.</p>
+
+  <h3>One Company. Three Specialisations.</h3>
+
+  <p>Most contractors in our sector cover one discipline. ProServ Industrial brings three together under one roof, one project team, and one service contract:</p>
+
+  <div class="cap-grid">
+    <div class="cap-card">
+      <h5>Industrial Door Systems</h5>
+      <p>High-speed doors, sectional overhead doors, fire shutters, clean room doors, freezer doors, roller shutters, automatic gates. For every access point in your building.</p>
+    </div>
+    <div class="cap-card">
+      <h5>Loading Dock Engineering</h5>
+      <p>Dock levellers, vehicle restraints, dock shelters, scissors lifts, ramps. Complete loading bay design, supply, and installation as Ireland's Stertil Dock Products partner.</p>
+    </div>
+    <div class="cap-card">
+      <h5>Facility Safety</h5>
+      <p>Polymer impact barriers, bollards, guardrails, column protectors, handrails. Next-generation safety systems through our Boplan partnership.</p>
+    </div>
+    <div class="cap-card accent">
+      <h5>Lifetime Service</h5>
+      <p>Preventative maintenance programmes, emergency callouts, periodic compliance inspections, and authorised OEM parts supply. We maintain everything we install.</p>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-box">
+      <span class="number">25+</span>
+      <span class="label">Years in Business</span>
+    </div>
+    <div class="stat-box">
+      <span class="number">PSA</span>
+      <span class="label">Licensed</span>
+    </div>
+    <div class="stat-box">
+      <span class="number">ISO</span>
+      <span class="label">9001 Supply Chain</span>
+    </div>
+    <div class="stat-box">
+      <span class="number">IE</span>
+      <span class="label">Nationwide Coverage</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 2: CAPABILITIES -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-label">Page 2 — Capabilities</div>
+
+  <h2>Engineering Solutions <span class="thin">for the Built Environment</span></h2>
+  <div class="tagline">From warehouse floors to loading bays — engineered access, safety, and performance for every building type.</div>
+
+  <p>Every building project has different requirements. A pharmaceutical plant needs hermetically sealed clean room doors. A food distribution centre needs temperature-controlled dock seals cycling hundreds of times a day. A logistics warehouse needs impact protection that survives forklift collisions without constant replacement. ProServ Industrial has the product range, the technical knowledge, and the supplier partnerships to address all of these — from a single source.</p>
+
+  <h3>Industrial Doors &amp; Entry Systems</h3>
+
+  <!-- Photo grid: door types -->
+  <div class="photo-grid">
+    <div class="photo-item">
+      <div class="photo-placeholder">[ Sectional overhead doors ]</div>
+      <div class="photo-label">Sectional Overhead Doors</div>
+    </div>
+    <div class="photo-item">
+      <div class="photo-placeholder">[ High-speed clean room doors ]</div>
+      <div class="photo-label">High-Speed Clean Room Doors</div>
+    </div>
+    <div class="photo-item">
+      <div class="photo-placeholder">[ Automatic sliding gate ]</div>
+      <div class="photo-label">Automatic Sliding Gate (PSA)</div>
+    </div>
+    <div class="photo-item">
+      <div class="photo-placeholder">[ Automatic entry door ]</div>
+      <div class="photo-label">Automatic Entry Systems</div>
+    </div>
+  </div>
+
+  <ul>
+    <li><strong>High-speed doors</strong> — Rapid roll and folding variants. Minimise air exchange, maintain temperature zones, support high-traffic environments</li>
+    <li><strong>Sectional overhead doors</strong> — Insulated steel and aluminium panels for warehouses, workshops, and commercial units</li>
+    <li><strong>Fire shutters and curtains</strong> — Certified fire-rated barriers for compartmentalisation and life safety</li>
+    <li><strong>Clean room and freezer doors</strong> — Hermetic, hygienic doors for pharmaceutical, food processing, and cold storage</li>
+    <li><strong>Automatic gates</strong> — Sliding, bi-folding, and cantilever trackless gates. PSA-licensed with access control integration</li>
+  </ul>
+
+  <hr class="section-sep">
+
+  <h3>Loading Dock Systems — Stertil Dock Products Partner</h3>
+
+  <div class="partner-box">
+    <h4>Stertil Dock Products</h4>
+    <div class="origin">Netherlands | Founded 1974 | ISO 9001 | Global Distributor Network</div>
+    <p>ProServ Industrial is Ireland's registered Stertil partner and <strong>the authorised Stertil parts dealer for Ireland</strong>. Direct access to Dutch-engineered loading dock equipment, factory-trained installation, and genuine OEM parts.</p>
+  </div>
+
+  <!-- Photo grid: dock equipment -->
+  <div class="photo-grid">
+    <div class="photo-item">
+      <div class="photo-placeholder">[ Dock shelters and vehicle restraints ]</div>
+      <div class="photo-label">Dock Shelters + Vehicle Restraints</div>
+    </div>
+    <div class="photo-item">
+      <div class="photo-placeholder">[ Dock leveller installation ]</div>
+      <div class="photo-label">Dock Leveller Installation</div>
+    </div>
+  </div>
+
+  <div class="cap-grid">
+    <div class="cap-card">
+      <h5>Dock Levellers</h5>
+      <p>Telescopic lip, swing lip, ergonomic, and mini variants. Bridge the gap between dock and vehicle safely and efficiently.</p>
+    </div>
+    <div class="cap-card">
+      <h5>Vehicle Restraints</h5>
+      <p>COMBILOK&reg; automatic systems lock trailers in place during loading — preventing creep and premature departure.</p>
+    </div>
+    <div class="cap-card">
+      <h5>Dock Shelters &amp; Seals</h5>
+      <p>Inflatable, curtain, cushion, and van hybrid shelters. Temperature control and weather protection during goods transfer.</p>
+    </div>
+    <div class="cap-card">
+      <h5>Ramps, Lifts &amp; Design</h5>
+      <p>Scissors lifts, ramps, and platforms. Custom loading dock design from initial layout to commissioning.</p>
+    </div>
+  </div>
+
+  <hr class="section-sep">
+
+  <h3>Facility Safety — Boplan Partner</h3>
+
+  <div class="partner-box">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+      <div style="flex: 1;">
+        <h4>Boplan</h4>
+        <div class="origin">Belgium | Founded 1999 | 80+ Countries | UN Global Compact</div>
+        <p>Boplan's polymer safety systems absorb impact energy (rated in Joules), return to shape after collision, and require almost no maintenance. Through our partnership, ProServ Industrial brings this technology to construction projects across Ireland and Europe.</p>
+      </div>
+      <div style="display: flex; gap: 8px; flex-shrink: 0; margin-left: 16px;">
+        <div class="cert-badge-placeholder">EcoVadis Silver</div>
+        <div class="cert-badge-placeholder">UN Global Compact</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Boplan product photo grid -->
+  <div class="photo-grid">
+    <div class="photo-item">
+      <div class="photo-placeholder">[ Safety barriers in warehouse ]</div>
+      <div class="photo-label">Safety Barriers (TB 400)</div>
+    </div>
+    <div class="photo-item">
+      <div class="photo-placeholder">[ Column protectors in facility ]</div>
+      <div class="photo-label">Column Protectors</div>
+    </div>
+    <div class="photo-item">
+      <div class="photo-placeholder">[ Pedestrian guardrails ]</div>
+      <div class="photo-label">Pedestrian Guardrails</div>
+    </div>
+    <div class="photo-item">
+      <div class="photo-placeholder">[ Safety gates at dock ]</div>
+      <div class="photo-label">Safety Gates</div>
+    </div>
+  </div>
+
+  <ul>
+    <li><strong>Safety barriers and guardrails</strong> — FLEX IMPACT&reg; series, impact resistance rated in Joules (up to 39 kJ for double-tube systems)</li>
+    <li><strong>Bollards and column protectors</strong> — KP UNIVERSAL fits any column size</li>
+    <li><strong>Handrails, gates, and kick rails</strong> — Pedestrian protection and fall prevention</li>
+    <li><strong>Polymer vs steel</strong> — Same strength, lighter, flexible, corrosion-free, colourfast, modular, self-restoring</li>
+  </ul>
+
+  <!-- Boplan trusted by -->
+  <p style="font-size: 12px; color: #718096; text-align: center; margin: 18px 0 8px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Boplan — Trusted by Leading Global Brands</p>
+  <div class="client-logo-row">
+    <div class="client-logo-box"></div>
+    <div class="client-logo-box"></div>
+    <div class="client-logo-box"></div>
+    <div class="client-logo-box"></div>
+    <div class="client-logo-box"></div>
+    <div class="client-logo-box"></div>
+  </div>
+  <div class="img-caption">Our safety partner Boplan supplies impact protection to Amazon, BMW, Volkswagen, Nestle, Ford, and Danone — the same engineering behind your facility safety</div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 3: TRACK RECORD -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-label">Page 3 — Track Record</div>
+
+  <h2>Proven Delivery <span class="thin">Across Sectors</span></h2>
+  <div class="tagline">From single-door replacements to multi-bay distribution centres — 25 years of engineering reliability.</div>
+
+  <p>ProServ Industrial has delivered projects across every major building type in Ireland. Whether fitting out a new build, refurbishing an existing facility, or upgrading to meet new regulations, we bring the same approach: understand requirements, engineer the right solution, install it properly, and maintain it for the long term.</p>
+
+  <h3>Sectors We Serve</h3>
+
+  <div class="cap-grid">
+    <div class="cap-card">
+      <h5>Logistics &amp; Distribution</h5>
+      <p>Multi-bay dock systems, high-speed doors, vehicle restraints for 24/7 operations.</p>
+    </div>
+    <div class="cap-card">
+      <h5>Food &amp; Beverage</h5>
+      <p>Hygienic doors, temperature-controlled dock seals, freezer systems. BRCGS/HACCP compliance documentation.</p>
+    </div>
+    <div class="cap-card">
+      <h5>Pharmaceutical &amp; Life Sciences</h5>
+      <p>Clean room doors, validated maintenance, GMP audit documentation.</p>
+    </div>
+    <div class="cap-card">
+      <h5>Commercial &amp; Retail</h5>
+      <p>Roller shutters, automatic gates, multi-site service contracts.</p>
+    </div>
+  </div>
+
+  <h3>Selected Projects</h3>
+
+  <!-- Case Study 1: Large distribution centre -->
+  <div class="case-study">
+    <div class="cs-photo-placeholder">[ Project photo: major distribution centre — multi-bay loading dock ]</div>
+    <div class="cs-body">
+      <h5>Project 1: [Client / Building Name]</h5>
+      <p class="cs-meta">[Location] | [Year] | Logistics / Distribution</p>
+      <p><strong>Scope:</strong> Complete loading dock fit-out for a new national distribution centre — 12+ bays with Stertil telescopic levellers, COMBILOK vehicle restraints, inflatable dock shelters, plus high-speed doors for internal zone separation.</p>
+      <p><strong>Challenge:</strong> Mixed fleet from 3.5t vans to articulated trailers. Temperature-controlled goods demanded airtight sealing at every dock position.</p>
+      <p><strong>Outcome:</strong> All bays commissioned on schedule. Energy savings of 30% versus previous facility. Ongoing preventative maintenance contract.</p>
+    </div>
+  </div>
+
+  <!-- Case Study 2: Food/pharma — clean room doors -->
+  <div class="case-study">
+    <div class="cs-photo-placeholder">[ Project photo: food processing facility — loading ramps and doors ]</div>
+    <div class="cs-body">
+      <h5>Project 2: [Client / Building Name]</h5>
+      <p class="cs-meta">[Location] | [Year] | Food / Pharmaceutical</p>
+      <p><strong>Scope:</strong> Supply and installation of high-speed hygienic doors, fire-rated shutters, and loading dock equipment for a food processing plant undergoing audit preparation.</p>
+      <p><strong>Challenge:</strong> Doors needed to meet strict hygiene standards while cycling 800+ times per day in a wet-wash environment.</p>
+      <p><strong>Outcome:</strong> Client passed audit with no door/access non-conformances. Quarterly inspection contract ensures ongoing compliance.</p>
+    </div>
+  </div>
+
+  <!-- Case Study 3: Facility safety upgrade — Boplan focus -->
+  <div class="case-study">
+    <div class="cs-photo-placeholder">[ Project photo: Boplan polymer safety barriers protecting machinery and pedestrian zones ]</div>
+    <div class="cs-body">
+      <h5>Project 3: [Client / Building Name]</h5>
+      <p class="cs-meta">[Location] | [Year] | Facility Safety Upgrade</p>
+      <p><strong>Scope:</strong> Full facility safety upgrade — Boplan polymer guardrails throughout pedestrian zones, KP UNIVERSAL column protectors on all racking, FLEX IMPACT TB 400 barriers separating forklift traffic from walkways, plus automated perimeter gate with access control.</p>
+      <p><strong>Challenge:</strong> Previous steel barriers required replacement every 12-18 months due to forklift damage. Client needed a solution that absorbed repeated impacts without structural failure or floor anchor damage.</p>
+      <p><strong>Outcome:</strong> Zero barrier replacements in 24 months. Annual safety barrier costs reduced by over 60%. Boplan polymer self-restores after impact — no deformation, no repainting, no anchor re-drilling.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 4: BUSINESS CASE -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-label">Page 4 — Business Case</div>
+
+  <h2>Why ProServ Industrial <span class="thin">— For Clients, Architects, and Partners</span></h2>
+  <div class="tagline">A proven Irish engineering business with strong European partnerships, recurring revenue, and a clear path to growth.</div>
+
+  <!-- Hero placeholder -->
+  <div class="hero-placeholder short">[ Completed multi-bay distribution centre — sectional doors and dock shelters ]</div>
+  <div class="img-caption">Completed facility — sectional overhead doors and loading dock shelters delivered, commissioned, and maintained by ProServ Industrial</div>
+
+  <h3>For Procurement Teams &amp; Architects</h3>
+
+  <div class="pillar-grid">
+    <div class="pillar">
+      <h5>Single-Source Efficiency</h5>
+      <p>Doors, docks, and safety from one provider. One tender, one project manager, one maintenance contract. Less coordination risk, faster delivery, lower total cost.</p>
+    </div>
+    <div class="pillar">
+      <h5>Exclusive Access</h5>
+      <p>Ireland's authorised Stertil parts dealer and Boplan partner. Products and support competitors cannot source.</p>
+    </div>
+    <div class="pillar">
+      <h5>Compliance-Ready</h5>
+      <p>Full installation documentation. Periodic inspections by competent engineers. Maintenance records for building audits, insurance, and regulation.</p>
+    </div>
+    <div class="pillar">
+      <h5>Nationwide &amp; European</h5>
+      <p>County Operations base, nationwide Irish coverage. European supply chains and technical support through our manufacturer partnerships.</p>
+    </div>
+  </div>
+
+  <hr class="section-sep">
+
+  <h3>The Business Behind the Engineering</h3>
+
+  <p>ProServ Industrial generates value at every stage of a building's lifecycle. Project revenue from design, supply, and installation — plus recurring service revenue from maintenance contracts, inspections, and parts. Every building we fit out becomes a long-term client.</p>
+
+  <div class="pillar-grid">
+    <div class="pillar">
+      <h5>Three Revenue Streams</h5>
+      <p>Industrial doors, loading docks, and safety. Each generates project income and recurring maintenance. Diversification reduces concentration risk.</p>
+    </div>
+    <div class="pillar">
+      <h5>Exclusive Partnerships</h5>
+      <p>Stertil and Boplan relationships built on years of trust, factory training, and capability. A competitive moat, not a resale agreement.</p>
+    </div>
+    <div class="pillar">
+      <h5>Growing Market</h5>
+      <p>European construction, cold chain expansion, nearshoring, and tightening safety regulations all drive demand for our core product lines.</p>
+    </div>
+    <div class="pillar">
+      <h5>Scalable Operations</h5>
+      <p>Digital service ticketing and preventative maintenance scheduling grow the installed base without proportional overhead.</p>
+    </div>
+  </div>
+
+  <h3>Our Commitment</h3>
+
+  <p>We do not sell products. We engineer reliability into every opening in your building — and we stay to maintain it for the life of the facility. That is what makes ProServ Industrial different, and that is what makes us a partner worth choosing.</p>
+
+  <!-- Logo placeholder + Contact -->
+  <div class="contact-block">
+    <div class="logo-placeholder">[ Company Logo ]</div>
+    <h3>ProServ Industrial Ltd.</h3>
+    <p><strong>County Operations, Ireland</strong> — Nationwide Service Coverage</p>
+    <p>+353 XX XXX XXXX</p>
+    <p>email@proservindustrial.com</p>
+    <p style="margin-top: 10px; font-size: 12px; opacity: 0.7;">proservindustrial.com</p>
+    <p style="margin-top: 6px; font-size: 11px; opacity: 0.5;">PSA Licensed &nbsp;|&nbsp; Registered Stertil Dock Products Partner &nbsp;|&nbsp; ISO 9001 Supply Chain</p>
+  </div>
+</div>
+
+<div class="doc-footer">
+  Portfolio sample — all client and location details anonymised | Layout and copy structure preserved for demonstration
+</div>
+
+</div>
+</body>
+</html>

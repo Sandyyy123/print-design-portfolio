@@ -1,0 +1,630 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CLINSTUDY CMR · Portfolio</title>
+<style>
+/* ─────────────────────────────────────────────────────────────────
+   Clinical Monitoring Record · Portfolio Version
+   Built to NHS / NEWS2 / NICE clinical-form conventions
+   A3 landscape, weasyprint-targeted
+   ───────────────────────────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+Pro:wght@600;700&display=swap');
+
+:root {
+  --ink:        #161D2D;
+  --slate:      #4F5663;
+  --slate-2:    #6B7280;
+  --hair:       #ACB2BC;
+  --hair-2:     #CCD1DA;
+  --paper:      #FFFFFF;
+  --soft:       #ECEFF4;
+  --band:       #F1F4F8;
+  --accent:     #0E3865;
+  --accent-2:   #1E5A99;
+  --action:     #9F4509;
+  --action-bg:  #FBEFD2;
+  --action-strong: #6B2D04;
+}
+
+@page { size: A3 landscape; margin: 0; }
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0; padding: 0;
+  font-family: 'Inter', 'Frutiger', 'Helvetica Neue', Arial, sans-serif;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: 'tnum' 1, 'cv11' 1;
+  font-size: 10pt;
+  line-height: 1.35;
+}
+
+.page {
+  width: 420mm; height: 297mm;
+  padding: 18mm 14mm 10mm 14mm;
+  background: var(--paper);
+  page-break-after: always;
+  display: flex; flex-direction: column;
+  position: relative;
+}
+.page:last-child { page-break-after: auto; }
+
+/* ── Brand bar ───────────────────────────────────────────────── */
+.brand-bar {
+  display: grid; grid-template-columns: 1fr auto;
+  align-items: end;
+  border-bottom: 1.4pt solid var(--ink);
+  padding-bottom: 3mm;
+  margin-bottom: 4mm;
+}
+.wordmark {
+  font-family: 'Source Serif Pro', Georgia, serif;
+  font-weight: 700; font-size: 32pt;
+  letter-spacing: 0.4pt;
+  color: var(--accent);
+  line-height: 0.9;
+}
+.subtitle {
+  font-size: 9.5pt; color: var(--slate);
+  letter-spacing: 0.4pt; margin-top: 2.5mm;
+}
+.meta {
+  text-align: right; font-size: 9pt; color: var(--slate);
+  line-height: 1.5;
+}
+.meta .id {
+  font-weight: 700; color: var(--ink);
+  font-size: 10.5pt; letter-spacing: 0.6pt;
+  margin-bottom: 1.2mm;
+}
+.meta .ln span { color: var(--ink); border-bottom: 0.5pt solid var(--ink); }
+
+/* ── Section caps ────────────────────────────────────────────── */
+.sec-cap {
+  font-size: 9pt; font-weight: 700;
+  letter-spacing: 0.7pt; text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* ── Identity strip: 4 cells, top of page 1 ──────────────────── */
+.id-strip {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-top: 0.5pt solid var(--hair);
+  border-bottom: 0.5pt solid var(--hair);
+  margin-bottom: 4mm;
+}
+.id-cell {
+  padding: 2.2mm 5mm 2.6mm 5mm;
+  border-right: 0.5pt solid var(--hair);
+  min-height: 19mm;
+}
+.id-cell:last-child { border-right: none; }
+.id-cell .sec-cap { display: block; margin-bottom: 3mm; }
+.field { margin-top: 2.2mm; }
+.field .lbl {
+  font-size: 8pt; letter-spacing: 0.4pt;
+  text-transform: uppercase; color: var(--slate);
+  font-weight: 600;
+  margin-bottom: 0.4mm;
+}
+.tbc {
+  color: var(--slate-2); font-weight: 400; font-style: italic;
+  letter-spacing: 0; text-transform: none;
+  margin-left: 2mm; font-size: 7pt;
+}
+.field .ln {
+  border-bottom: 0.5pt solid var(--hair);
+  height: 4.5mm;
+}
+
+/* ── Stim monitoring container (unified day-grid + biomarker) ─ */
+.stim-frame {
+  position: relative;
+  border: 0.8pt solid var(--accent);
+  background: var(--paper);
+  margin-bottom: 5mm;
+  flex: 1 1 auto;
+  display: flex; flex-direction: column;
+}
+.stim-frame::before {
+  content: "STIM MONITORING";
+  position: absolute; top: -3.2mm; left: 5mm;
+  background: var(--paper);
+  padding: 0 3mm;
+  font-size: 8pt; font-weight: 700;
+  letter-spacing: 0.6pt;
+  color: var(--accent);
+}
+
+.stim-grid-wrap, .biom-grid-wrap {
+  display: grid;
+  grid-template-columns: 1fr 90mm;
+}
+.stim-grid-wrap { border-bottom: 0.5pt solid var(--hair); }
+.stim, .biom {
+  display: flex; flex-direction: column;
+}
+.stim-head, .biom-head {
+  display: grid;
+  grid-template-columns: 30mm repeat(8, 1fr) 12mm;
+  background: var(--soft);
+  border-bottom: 1pt solid var(--accent);
+}
+.stim-head .lbl, .biom-head .lbl {
+  padding: 2.4mm 3mm;
+  font-size: 8pt; font-weight: 700;
+  letter-spacing: 0.5pt; text-transform: uppercase;
+  color: var(--slate);
+}
+.stim-head .day {
+  padding: 2.2mm 0; text-align: center;
+  font-size: 11pt; font-weight: 700; color: var(--ink);
+  border-left: 0.5pt solid var(--hair);
+  font-variant-numeric: tabular-nums;
+}
+.biom-head .day {
+  padding: 1.8mm 0; text-align: center;
+  font-size: 8pt; color: var(--slate);
+  border-left: 0.5pt solid var(--hair);
+  font-variant-numeric: tabular-nums;
+}
+.stim-head .ext, .biom-head .ext {
+  border-left: 0.5pt solid var(--hair);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--slate-2); font-size: 11pt;
+}
+
+.stim-row, .biom-row {
+  display: grid;
+  grid-template-columns: 30mm repeat(8, 1fr) 12mm;
+  border-bottom: 0.5pt solid var(--hair-2);
+}
+.stim-row:last-child, .biom-row:last-child { border-bottom: none; }
+.stim-row { min-height: 9mm; }
+.stim-row.scale { min-height: 14mm; }
+.biom-row { min-height: 10mm; }
+.stim-row:nth-child(even), .biom-row:nth-child(even) { background: var(--band); }
+
+.stim-row .lbl, .biom-row .lbl {
+  padding: 0 3mm;
+  display: flex; align-items: center;
+  font-size: 9pt; font-weight: 600; color: var(--ink);
+  letter-spacing: 0.3pt;
+  border-right: 0.5pt solid var(--hair);
+  background: var(--soft);
+}
+.stim-row .cell, .biom-row .cell { border-left: 0.4pt solid var(--hair-2); }
+.stim-row .cell:first-of-type,
+.biom-row .cell:first-of-type { border-left: 0.5pt solid var(--hair); }
+.stim-row .ext, .biom-row .ext {
+  border-left: 0.5pt solid var(--hair); background: var(--soft);
+}
+/* Vertical guide every 2 days, faint */
+.stim-row .cell:nth-of-type(2n+1) { border-left-color: var(--hair); border-left-width: 0.6pt; }
+.biom-row .cell:nth-of-type(2n+1) { border-left-color: var(--hair); border-left-width: 0.6pt; }
+.stim-row .cell:first-of-type,
+.biom-row .cell:first-of-type { border-left-width: 0.5pt; }
+
+/* IMPORTANT INFO sidebar (right of day-grid) */
+.info {
+  border-left: 1pt solid var(--accent);
+  padding: 4mm 5mm 4mm 6mm;
+  display: flex; flex-direction: column;
+}
+.info { padding: 5mm 6mm; }
+.info .sec-cap { font-size: 8.5pt; letter-spacing: 0.5pt; margin-bottom: 4mm; }
+.info .ruled {
+  flex: 1 1 auto;
+  background-image: linear-gradient(to bottom,
+    transparent 0, transparent calc(6mm - 0.5pt),
+    var(--hair) calc(6mm - 0.5pt), var(--hair) 6mm);
+  background-size: 100% 6mm;
+  background-repeat: repeat-y;
+}
+
+/* ── Action threshold row — dedicated band, single line, no wrap ── */
+.action-row {
+  display: grid;
+  grid-template-columns: 42mm 1fr 12mm;
+  background: var(--action-bg);
+  border-top: 1pt solid var(--action);
+  border-bottom: 1pt solid var(--action);
+  min-height: 8mm;
+  align-items: center;
+}
+.action-row .lbl {
+  padding: 0 4mm;
+  font-size: 9pt; font-weight: 700;
+  letter-spacing: 0.4pt; text-transform: uppercase;
+  color: var(--action-strong);
+  border-right: 0.6pt solid var(--action);
+  height: 100%;
+  display: flex; align-items: center;
+  white-space: nowrap;
+}
+.action-row .body {
+  padding: 0 6mm;
+  font-size: 9pt; font-weight: 700;
+  letter-spacing: 0.5pt; text-transform: uppercase;
+  color: var(--action-strong);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.action-row .body .rhs {
+  font-weight: 600; letter-spacing: 0.4pt;
+  color: var(--action-strong);
+  font-size: 8.5pt;
+}
+.action-row .ext {
+  border-left: 0.6pt solid var(--action);
+  height: 100%;
+}
+
+/* ── Sign-off strip ─────────────────────────────────────────── */
+.signoff {
+  display: grid; grid-template-columns: 1.4fr 1fr 1fr 0.7fr;
+  border-top: 1pt solid var(--ink);
+  padding-top: 2.5mm; margin-top: 3mm;
+}
+.signoff > div {
+  border-right: 0.5pt solid var(--hair);
+  padding: 0 5mm 0 0;
+  margin-right: 5mm;
+}
+.signoff > div:last-child {
+  border-right: none; padding-right: 0; margin-right: 0;
+}
+.signoff .lbl {
+  font-size: 7.5pt; letter-spacing: 0.4pt;
+  text-transform: uppercase; color: var(--slate-2);
+  font-weight: 600;
+}
+.signoff .ln {
+  border-bottom: 0.5pt solid var(--hair);
+  height: 5mm;
+}
+
+.foot {
+  display: flex; justify-content: space-between;
+  font-size: 7pt; color: var(--slate-2);
+  letter-spacing: 0.4pt;
+  margin-top: 3mm;
+  padding-top: 1.5mm;
+}
+
+/* ── Page 2: vertically stacked sections ─────────────────────── */
+.proc-stack {
+  display: flex; flex-direction: column;
+  gap: 5mm;
+  flex: 1 1 auto;
+}
+.proc {
+  border: 0.6pt solid var(--hair);
+  display: flex; flex-direction: column;
+  flex: 1 1 0;
+}
+.proc-head {
+  display: grid;
+  grid-template-columns: 1fr 70mm 50mm;
+  background: var(--soft);
+  border-bottom: 1pt solid var(--accent);
+}
+.proc-head > div {
+  padding: 3mm 5mm;
+  border-left: 0.5pt solid var(--hair);
+}
+.proc-head > div:first-child { border-left: none; }
+.proc-head .name {
+  display: flex; align-items: baseline; gap: 5mm;
+}
+.proc-head .name .abbr {
+  font-family: 'Source Serif Pro', Georgia, serif;
+  font-weight: 700; font-size: 18pt;
+  color: var(--accent); letter-spacing: 0.3pt;
+  border-left: 2.5pt solid var(--accent);
+  padding-left: 4mm;
+}
+.proc-head .name .full {
+  font-size: 12pt; font-weight: 700; color: var(--ink);
+  letter-spacing: 0.2pt;
+}
+.proc-head .opdate .lbl {
+  font-size: 7.5pt; letter-spacing: 0.5pt;
+  text-transform: uppercase; color: var(--slate-2);
+  font-weight: 600;
+  margin-bottom: 3mm;
+}
+.proc-head .opdate .ln {
+  border-bottom: 0.5pt solid var(--hair);
+  height: 5mm;
+}
+.proc-body {
+  flex: 1 1 auto;
+  padding: 4mm 5mm 4mm 5mm;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 4mm 6mm;
+}
+.proc-body.outcome {
+  grid-template-columns: repeat(5, 1fr);
+}
+.proc-body.uss {
+  grid-template-columns: 1fr;
+}
+.proc-field .lbl {
+  font-size: 8pt; letter-spacing: 0.4pt;
+  text-transform: uppercase; color: var(--slate);
+  font-weight: 600;
+  margin-bottom: 1.6mm;
+}
+.proc-field .ln {
+  border-bottom: 0.5pt solid var(--hair);
+  height: 7mm;
+}
+.proc-field.indent { padding-left: 6mm; border-left: 0.5pt solid var(--hair-2); }
+.proc-field.parent .lbl { color: var(--accent); }
+
+</style>
+</head>
+<body>
+
+<!-- ─────────────────── PAGE 1 ─────────────────── -->
+<section class="page">
+  <header class="brand-bar">
+    <div>
+      <div class="wordmark">CLINSTUDY</div>
+      <div class="subtitle">Clinical Monitoring Record · Phase 3 · Page 1 of 2</div>
+    </div>
+    <div class="meta">
+      <div class="id">CMR · 001</div>
+      <div class="ln">Patient ID&nbsp;<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> &nbsp;·&nbsp; Cycle ID&nbsp;<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+    </div>
+  </header>
+
+  <!-- Identity strip — 4 columns -->
+  <div class="id-strip">
+    <div class="id-cell">
+      <div class="sec-cap">Demographics</div>
+      <div class="field"><div class="lbl">Female</div><div class="ln"></div></div>
+      <div class="field"><div class="lbl">Male</div><div class="ln"></div></div>
+    </div>
+    <div class="id-cell">
+      <div class="sec-cap">Admin</div>
+      <div class="field"><div class="lbl">Source</div><div class="ln"></div></div>
+      <div class="field"><div class="lbl">Egg source</div><div class="ln"></div></div>
+      <div class="field"><div class="lbl">Destination</div><div class="ln"></div></div>
+    </div>
+    <div class="id-cell">
+      <div class="sec-cap">BMI · Planned cycle</div>
+      <div class="field"><div class="lbl">BMI</div><div class="ln"></div></div>
+      <div class="field"><div class="lbl">Planned cycle notice</div><div class="ln"></div></div>
+      <div class="field"><div class="lbl">ROUTE/BATCH</div><div class="ln"></div></div>
+    </div>
+    <div class="id-cell">
+      <div class="sec-cap">Sheet info</div>
+      <div class="field"><div class="lbl">Antibody</div><div class="ln"></div></div>
+      <div class="field"><div class="lbl">PROTOCOL REF</div><div class="ln"></div></div>
+      <div class="field"><div class="lbl">Sheet ___ of ___</div><div class="ln"></div></div>
+    </div>
+  </div>
+
+  <!-- Stim monitoring (unified frame: day grid + action line + biomarker grid + sidebar) -->
+  <div class="stim-frame">
+
+    <div class="stim-grid-wrap">
+      <div class="stim">
+        <div class="stim-head">
+          <div class="lbl">Cycle day</div>
+          <div class="day">1</div><div class="day">2</div><div class="day">3</div><div class="day">4</div>
+          <div class="day">5</div><div class="day">6</div><div class="day">7</div><div class="day">8</div>
+          <div class="ext">→</div>
+        </div>
+        <div class="stim-row">
+          <div class="lbl">Date</div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          <div class="ext"></div>
+        </div>
+        <div class="stim-row">
+          <div class="lbl" style="color:var(--slate-2); font-style:italic; font-weight:500;">TBD</div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          <div class="ext"></div>
+        </div>
+        <div class="stim-row">
+          <div class="lbl">Med 1</div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          <div class="ext"></div>
+        </div>
+        <div class="stim-row">
+          <div class="lbl">Med 2</div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          <div class="ext"></div>
+        </div>
+        <div class="stim-row">
+          <div class="lbl">Med 3</div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          <div class="ext"></div>
+        </div>
+        <div class="stim-row scale">
+          <div class="lbl">Scale L / R</div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          <div class="ext"></div>
+        </div>
+      </div>
+
+      <aside class="info">
+        <div class="sec-cap">Important info</div>
+        <div class="ruled"></div>
+      </aside>
+    </div>
+
+    <!-- ACTION threshold row -->
+    <div class="action-row">
+      <div class="lbl">Action Threshold</div>
+      <div class="body">
+        <span>Clinical Review</span>
+      </div>
+      <div class="ext"></div>
+    </div>
+
+    <div class="biom-grid-wrap">
+      <div class="biom">
+        <div class="biom-head">
+          <div class="lbl">Biomarker</div>
+          <div class="day">1</div><div class="day">2</div><div class="day">3</div><div class="day">4</div>
+          <div class="day">5</div><div class="day">6</div><div class="day">7</div><div class="day">8</div>
+          <div class="ext"></div>
+        </div>
+        <div class="biom-row">
+          <div class="lbl">Endometrium-mm</div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          <div class="ext"></div>
+        </div>
+        <div class="biom-row">
+          <div class="lbl">E2</div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          <div class="ext"></div>
+        </div>
+        <div class="biom-row">
+          <div class="lbl">P4</div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          <div class="ext"></div>
+        </div>
+        <div class="biom-row">
+          <div class="lbl">LH</div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          <div class="ext"></div>
+        </div>
+        <div class="biom-row">
+          <div class="lbl" style="color:var(--slate-2); font-style:italic; font-weight:500;">Biomarker 5</div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+          <div class="ext"></div>
+        </div>
+      </div>
+
+      <aside class="info">
+        <div class="sec-cap">Medications</div>
+        <div class="ruled"></div>
+      </aside>
+    </div>
+
+  </div>
+
+  <!-- Sign-off -->
+  <div class="signoff">
+    <div><div class="lbl">Recorded by</div><div class="ln"></div></div>
+    <div><div class="lbl">Signature</div><div class="ln"></div></div>
+    <div><div class="lbl">Time</div><div class="ln"></div></div>
+    <div><div class="lbl">Patient initials</div><div class="ln"></div></div>
+  </div>
+
+  <div class="foot">
+    <div>CLINSTUDY · Clinical Monitoring Record</div>
+    <div>Printed _____________  ·  v1.0</div>
+  </div>
+</section>
+
+
+<!-- ─────────────────── PAGE 2 ─────────────────── -->
+<section class="page">
+  <header class="brand-bar">
+    <div>
+      <div class="wordmark">CLINSTUDY</div>
+      <div class="subtitle">Clinical Monitoring Record · Phase 3 · Page 2 of 2</div>
+    </div>
+    <div class="meta">
+      <div class="id">CMR · 001</div>
+      <div class="ln">Patient ID&nbsp;<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> &nbsp;·&nbsp; Cycle ID&nbsp;<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+    </div>
+  </header>
+
+  <div class="proc-stack">
+
+    <!-- EPU -->
+    <div class="proc">
+      <div class="proc-head">
+        <div class="name"><span class="abbr">EPU</span><span class="full">Egg pickup</span></div>
+        <div class="opdate"><div class="lbl">Operator</div><div class="ln"></div></div>
+        <div class="opdate"><div class="lbl">Date</div><div class="ln"></div></div>
+      </div>
+      <div class="proc-body">
+        <div class="proc-field"><div class="lbl">Eggs / follicles</div><div class="ln"></div></div>
+        <div class="proc-field"><div class="lbl">MII</div><div class="ln"></div></div>
+        <div class="proc-field parent"><div class="lbl">Doses</div><div class="ln"></div></div>
+        <div class="proc-field indent"><div class="lbl">Instructions</div><div class="ln"></div></div>
+        <div class="proc-field indent"><div class="lbl">Suggestions</div><div class="ln"></div></div>
+      </div>
+    </div>
+
+    <!-- ET -->
+    <div class="proc">
+      <div class="proc-head">
+        <div class="name"><span class="abbr">ET</span><span class="full">Embryo transfer</span></div>
+        <div class="opdate"><div class="lbl">Operator</div><div class="ln"></div></div>
+        <div class="opdate"><div class="lbl">Date</div><div class="ln"></div></div>
+      </div>
+      <div class="proc-body">
+        <div class="proc-field"><div class="lbl">Live</div><div class="ln"></div></div>
+        <div class="proc-field"><div class="lbl">SOPs</div><div class="ln"></div></div>
+        <div class="proc-field"><div class="lbl"># Embryos</div><div class="ln"></div></div>
+        <div class="proc-field"><div class="lbl">Goal</div><div class="ln"></div></div>
+        <div class="proc-field"><div class="lbl">Institutions</div><div class="ln"></div></div>
+      </div>
+    </div>
+
+    <!-- OUTCOME -->
+    <div class="proc">
+      <div class="proc-head">
+        <div class="name"><span class="abbr">OC</span><span class="full">Outcome</span></div>
+        <div class="opdate"><div class="lbl">Operator</div><div class="ln"></div></div>
+        <div class="opdate"><div class="lbl">Date</div><div class="ln"></div></div>
+      </div>
+      <div class="proc-body outcome">
+        <div class="proc-field"><div class="lbl">hCG</div><div class="ln"></div></div>
+        <div class="proc-field"><div class="lbl">E2</div><div class="ln"></div></div>
+        <div class="proc-field"><div class="lbl">P4</div><div class="ln"></div></div>
+        <div class="proc-field"><div class="lbl">Pregnant</div><div class="ln"></div></div>
+        <div class="proc-field"><div class="lbl">Not pregnant</div><div class="ln"></div></div>
+      </div>
+    </div>
+
+    <!-- USS — open notes block -->
+    <div class="proc">
+      <div class="proc-head">
+        <div class="name"><span class="abbr">USS</span><span class="full">Ultrasound</span></div>
+        <div class="opdate"><div class="lbl">Operator</div><div class="ln"></div></div>
+        <div class="opdate"><div class="lbl">Date</div><div class="ln"></div></div>
+      </div>
+      <div class="proc-body uss" style="padding:5mm;">
+        <div style="height:100%; min-height:18mm; background-image: linear-gradient(to bottom, transparent 0, transparent calc(7mm - 0.5pt), var(--hair) calc(7mm - 0.5pt), var(--hair) 7mm); background-size: 100% 7mm; background-repeat: repeat-y;"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Sign-off -->
+  <div class="signoff">
+    <div><div class="lbl">Recorded by</div><div class="ln"></div></div>
+    <div><div class="lbl">Signature</div><div class="ln"></div></div>
+    <div><div class="lbl">Time</div><div class="ln"></div></div>
+    <div><div class="lbl">Patient initials</div><div class="ln"></div></div>
+  </div>
+
+  <div class="foot">
+    <div>CLINSTUDY · Clinical Monitoring Record</div>
+    <div>Printed _____________  ·  v1.0</div>
+  </div>
+</section>
+
+</body>
+</html>
